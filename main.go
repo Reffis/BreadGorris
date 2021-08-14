@@ -2,54 +2,58 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"internal/commands"
+	"internal/events"
+
 	"github.com/bwmarrin/discordgo"
 )
 
-// Variables used for command line parameters
-
 func main() {
-
-	// Create a new Discord session using the provided bot token.
-	dg, err := discordgo.New("Token")
+	token, _ := ioutil.ReadFile("token")
+	dg, err := discordgo.New(string(token))
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
 		return
 	}
 
-	// Register the messageCreate func as a callback for MessageCreate events.
-	dg.AddHandler(messageCreate)
+	registerEvents(dg)
+	registerCommands(dg)
 
-	// In this example, we only care about receiving message events.
-	dg.Identify.Intents = discordgo.IntentsGuildMessages
-
-	// Open a websocket connection to Discord and begin listening.
 	err = dg.Open()
 	if err != nil {
 		fmt.Println("error opening connection,", err)
 		return
 	}
-
-	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
-
-	// Cleanly close down the Discord session.
 	dg.Close()
 }
 
-func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if m.Content == "ping" {
+func registerEvents(s *discordgo.Session) {
+	joinLeaveHandler := events.NewJoinLeaveHandler()
+	s.AddHandler(joinLeaveHandler.HandlerJoin)
+	s.AddHandler(joinLeaveHandler.HandlerLeave)
 
+	s.AddHandler(events.NewReadyHandler().Handler)
+	s.AddHandler(events.NewMessageHandler().Handler)
+}
+
+func registerCommands(s *discordgo.Session) {
+	cmdHandler := commands.NewCommandHandler("!")
+	cmdHandler.OnError = func(err error, ctx *commands.Context) {
+		ctx.Session.ChannelMessageSend(ctx.Message.ChannelID,
+			fmt.Sprintf("Command Execution failed: %s", err.Error()))
 	}
 
-	// If the message is "pong" reply with "Ping!"
-	if m.Content == "pong" {
-		s.ChannelMessageSend(m.ChannelID, "Ping!")
-	}
+	cmdHandler.RegisterCommand(&commands.CmdPing{})
+	cmdHandler.RegisterMiddleware(&commands.MwPermissions{})
+
+	s.AddHandler(cmdHandler.HandleMessage)
 }
