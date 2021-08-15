@@ -29,6 +29,7 @@ func main() {
 		fmt.Println("error opening connection,", err)
 		return
 	}
+	dg.UpdateStatus(0, "gorris help")
 	fmt.Println("Bot is now running.  Press CTRL-C to exit.")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
@@ -42,9 +43,9 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 	if result.Err != nil {
-		log.Println("[Error] [", m.Author.ID, "]", result.Err)
+		log.Println("[ Error ] [", m.Author.ID, "]", result.Err)
 		return
 	}
-	log.Println("[Command] [", m.Author.ID, "]", result.Result)
+	log.Println("[ Command ] [", m.Author.ID, "]", result.Result)
 
 }
