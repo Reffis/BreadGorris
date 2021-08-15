@@ -7,8 +7,8 @@ import (
 )
 
 var (
-	prefix string = "gorris"
-	owner  string = "760688241447141395"
+	prefix string = GetConfig("prefix")
+	owner  string = GetConfig("owner")
 )
 
 type CmdResult struct {

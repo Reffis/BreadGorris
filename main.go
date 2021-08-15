@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/signal"
@@ -15,8 +14,7 @@ import (
 )
 
 func main() {
-	token, _ := ioutil.ReadFile("token")
-	dg, err := discordgo.New(string(token))
+	dg, err := discordgo.New("Bot " + cmd.GetConfig("token"))
 	if err != nil {
 		fmt.Println("error creating Discord session,", err)
 		return

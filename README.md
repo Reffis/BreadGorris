@@ -16,7 +16,16 @@ $ git clone https://github.com/Reffis/BreadGorris.git
 $ cd BreadGorris
 ```
 ---
-`token` 파일을 생성한후 (확장자 X), 아래의 텍스트를 입력합니다.
+
+`config/README.md`를 따라, 설정 파일을 만들어주세요.
+
+```sh
+$ python3 create_config.py
+
+# or
+
+$ python create_config.py
+```
 
 ```
 Bot [토큰]

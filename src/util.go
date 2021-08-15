@@ -1,8 +1,6 @@
 package src
 
 import (
-	"time"
-
 	"github.com/bwmarrin/discordgo"
 )
 
@@ -46,12 +44,9 @@ func Dev(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult
 		Footer:    &discordgo.MessageEmbedFooter{Text: m.Author.Username, IconURL: m.Author.AvatarURL("1024")},
 		Thumbnail: &discordgo.MessageEmbedThumbnail{URL: "https://cdn.discordapp.com/avatars/760688241447141395/a_6fc82732de318b2894554c7906ab9b91.gif?size=1024"},
 	})
-	return CmdResult{"help", nil}
+	return CmdResult{"dev", nil}
 }
 func Test(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult {
-	time.Sleep(8 * time.Second)
-
-	// Printed after sleep is over
-	s.ChannelMessageSend(m.ChannelID, "Test")
+	s.ChannelMessageSend(m.ChannelID, "테su투")
 	return CmdResult{"Test", nil}
 }
