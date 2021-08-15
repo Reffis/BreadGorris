@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -35,5 +36,14 @@ func main() {
 }
 
 func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
-	cmd.Command(s, m)
+	result := cmd.Command(s, m)
+	if result.Result == "None" {
+		return
+	}
+	if result.Err != nil {
+		log.Println("[Error] [", m.Author.ID, "]", result.Err)
+		return
+	}
+	log.Println("[Command] [", m.Author.ID, "]", result.Result)
+
 }
