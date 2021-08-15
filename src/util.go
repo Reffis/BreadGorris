@@ -8,11 +8,12 @@ func Help(s *discordgo.Session, m *discordgo.MessageCreate) CmdResult {
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 		Title:       "도움말",
 		Description: "**Prefix**: `gorris`",
-		Color:       0x00FF00,
+		Color:       WHITE,
 		Footer:      &discordgo.MessageEmbedFooter{Text: m.Author.Username, IconURL: m.Author.AvatarURL("1024")},
 		Fields: []*discordgo.MessageEmbedField{
 			{Name: "Utility", Value: UTIL_TEXT, Inline: true},
 			{Name: "Moderator", Value: MODER_TEXT, Inline: true},
+			{Name: "Fun", Value: MODER_TEXT, Inline: false},
 		},
 	})
 	return CmdResult{"help", nil}
