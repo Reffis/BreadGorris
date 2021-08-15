@@ -3,12 +3,14 @@ package src
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"strings"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 )
 
-const FUN_TEXT = "> `avatar [id or mention]`"
+const FUN_TEXT = "> `avatar [id or mention]` `choice [items]`"
 
 func Avatar(s *discordgo.Session, m *discordgo.MessageCreate, args []string) CmdResult {
 	id := strings.Replace(strings.Replace(strings.Replace(args[2], "!", "", -1), "<@", "", -1), ">", "", -1)
@@ -23,4 +25,11 @@ func Avatar(s *discordgo.Session, m *discordgo.MessageCreate, args []string) Cmd
 		Image:  &discordgo.MessageEmbedImage{URL: u.AvatarURL("1024")},
 	})
 	return CmdResult{"avatar", nil}
+}
+
+func Choice(s *discordgo.Session, m *discordgo.MessageCreate, args []string) CmdResult {
+	items := args[2:]
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	s.ChannelMessageSend(m.ChannelID, fmt.Sprintln(items[r.Intn(len(items))]))
+	return CmdResult{"choice", nil}
 }

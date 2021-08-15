@@ -24,6 +24,7 @@ func Command(s *discordgo.Session, m *discordgo.MessageCreate, args []string) Cm
 	cmd := map[string]func(s *discordgo.Session, m *discordgo.MessageCreate, args []string) CmdResult{
 		"help":   Help,
 		"avatar": Avatar,
+		"choice": Choice,
 	}
 	if args[0] == prefix {
 		return cmd[args[1]](s, m, args)

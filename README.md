@@ -41,6 +41,8 @@ $ go run main.go
 
 `gorris avatar [id or mention]`: 유저의 아바타를 가져옵니다.
 
+`gorris choice [items]`: 랜덤으로 아이템을 고릅니다.
+
 > (더 추가될 예정)
 
 <br><br>
