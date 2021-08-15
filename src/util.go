@@ -13,7 +13,8 @@ func Help(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResul
 		Fields: []*discordgo.MessageEmbedField{
 			{Name: "Utility", Value: UTIL_TEXT, Inline: true},
 			{Name: "Moderator", Value: MODER_TEXT, Inline: true},
-			{Name: "Fun", Value: MODER_TEXT, Inline: false},
+			{Name: "Fun", Value: FUN_TEXT, Inline: false},
+			{Name: "Owner", Value: OWNER_TEXT, Inline: true},
 		},
 	})
 	return CmdResult{"help", nil}
