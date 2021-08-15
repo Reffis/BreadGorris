@@ -7,10 +7,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"internal/commands"
-	"internal/events"
-
 	"github.com/bwmarrin/discordgo"
+
+	cmd "BreadGorris/src"
 )
 
 func main() {
@@ -21,8 +20,7 @@ func main() {
 		return
 	}
 
-	registerEvents(dg)
-	registerCommands(dg)
+	dg.AddHandler(messageHandler)
 
 	err = dg.Open()
 	if err != nil {
@@ -36,24 +34,6 @@ func main() {
 	dg.Close()
 }
 
-func registerEvents(s *discordgo.Session) {
-	joinLeaveHandler := events.NewJoinLeaveHandler()
-	s.AddHandler(joinLeaveHandler.HandlerJoin)
-	s.AddHandler(joinLeaveHandler.HandlerLeave)
-
-	s.AddHandler(events.NewReadyHandler().Handler)
-	s.AddHandler(events.NewMessageHandler().Handler)
-}
-
-func registerCommands(s *discordgo.Session) {
-	cmdHandler := commands.NewCommandHandler("!")
-	cmdHandler.OnError = func(err error, ctx *commands.Context) {
-		ctx.Session.ChannelMessageSend(ctx.Message.ChannelID,
-			fmt.Sprintf("Command Execution failed: %s", err.Error()))
-	}
-
-	cmdHandler.RegisterCommand(&commands.CmdPing{})
-	cmdHandler.RegisterMiddleware(&commands.MwPermissions{})
-
-	s.AddHandler(cmdHandler.HandleMessage)
+func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
+	cmd.Command(s, m)
 }
