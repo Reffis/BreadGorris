@@ -39,6 +39,8 @@ $ go run main.go
 
 `gorris help`: 도움말을 표시합니다.
 
+`gorris avatar [id or mention]`: 유저의 아바타를 가져옵니다.
+
 > (더 추가될 예정)
 
 <br><br>
