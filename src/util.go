@@ -1,6 +1,10 @@
 package src
 
-import "github.com/bwmarrin/discordgo"
+import (
+	"time"
+
+	"github.com/bwmarrin/discordgo"
+)
 
 const UTIL_TEXT = "> `help`, `opensource`, `dev`"
 
@@ -43,4 +47,11 @@ func Dev(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult
 		Thumbnail: &discordgo.MessageEmbedThumbnail{URL: "https://cdn.discordapp.com/avatars/760688241447141395/a_6fc82732de318b2894554c7906ab9b91.gif?size=1024"},
 	})
 	return CmdResult{"help", nil}
+}
+func Test(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult {
+	time.Sleep(8 * time.Second)
+
+	// Printed after sleep is over
+	s.ChannelMessageSend(m.ChannelID, "Test")
+	return CmdResult{"Test", nil}
 }
