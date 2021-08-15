@@ -2,7 +2,6 @@ package src
 
 import (
 	"log"
-	"strings"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -16,18 +15,18 @@ type CmdResult struct {
 	Err    error
 }
 
-func Command(s *discordgo.Session, m *discordgo.MessageCreate) CmdResult {
+func Command(s *discordgo.Session, m *discordgo.MessageCreate, args []string) CmdResult {
 	defer func() {
 		if r := recover(); r != nil {
 			log.Println("ERROR", r)
 		}
 	}()
-	cmd := map[string]func(s *discordgo.Session, m *discordgo.MessageCreate) CmdResult{
-		"help": Help,
+	cmd := map[string]func(s *discordgo.Session, m *discordgo.MessageCreate, args []string) CmdResult{
+		"help":   Help,
+		"avatar": Avatar,
 	}
-	split := strings.Split(m.Content, " ")
-	if split[0] == prefix {
-		return cmd[split[1]](s, m)
+	if args[0] == prefix {
+		return cmd[args[1]](s, m, args)
 	}
 	return CmdResult{Result: "None", Err: nil}
 }
