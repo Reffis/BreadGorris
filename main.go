@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
@@ -36,7 +37,7 @@ func main() {
 }
 
 func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
-	result := cmd.Command(s, m)
+	result := cmd.Command(s, m, strings.Split(m.Content, " "))
 	if result.Result == "None" {
 		return
 	}

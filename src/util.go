@@ -4,7 +4,7 @@ import "github.com/bwmarrin/discordgo"
 
 const UTIL_TEXT = "> `help`"
 
-func Help(s *discordgo.Session, m *discordgo.MessageCreate) CmdResult {
+func Help(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult {
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 		Title:       "도움말",
 		Description: "**Prefix**: `gorris`",
