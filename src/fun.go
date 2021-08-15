@@ -10,7 +10,7 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-const FUN_TEXT = "> `avatar [id or mention]` `choice [items]`"
+const FUN_TEXT = "> `avatar [id or mention]`, `choice [items]`"
 
 func Avatar(s *discordgo.Session, m *discordgo.MessageCreate, args []string) CmdResult {
 	id := strings.Replace(strings.Replace(strings.Replace(args[2], "!", "", -1), "<@", "", -1), ">", "", -1)
