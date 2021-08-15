@@ -21,8 +21,8 @@ $ cd BreadGorris
 ```
 Bot [토큰]
 ```
-
 `[토큰]` 에는 봇의 토큰을 입력해주세요.
+
 ---
 ```shell
 $ go run main.go
