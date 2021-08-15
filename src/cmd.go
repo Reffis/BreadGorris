@@ -8,6 +8,7 @@ import (
 
 var (
 	prefix string = "gorris"
+	owner  string = "760688241447141395"
 )
 
 type CmdResult struct {
@@ -22,9 +23,12 @@ func Command(s *discordgo.Session, m *discordgo.MessageCreate, args []string) Cm
 		}
 	}()
 	cmd := map[string]func(s *discordgo.Session, m *discordgo.MessageCreate, args []string) CmdResult{
-		"help":   Help,
-		"avatar": Avatar,
-		"choice": Choice,
+		"help":       Help,
+		"avatar":     Avatar,
+		"choice":     Choice,
+		"status":     Status,
+		"opensource": OpenSource,
+		"dev":        Dev,
 	}
 	if args[0] == prefix {
 		return cmd[args[1]](s, m, args)
