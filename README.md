@@ -43,6 +43,12 @@ $ go run main.go
 
 `gorris choice [items]`: 랜덤으로 아이템을 고릅니다.
 
+`gorris status [Text]`: 게임 상태를 업데이트합니다.
+
+`gorris opensource`: 오픈소스의 정보를 표시합니다.
+
+`gorris dev`: 개발자의 정보를 표시합니다.
+
 > (더 추가될 예정)
 
 <br><br>
