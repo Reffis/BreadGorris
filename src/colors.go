@@ -1,5 +1,10 @@
 package src
 
+import (
+	"math/rand"
+	"time"
+)
+
 const (
 	RED = 0xff1f1f
 
@@ -19,3 +24,8 @@ const (
 
 	WHITE = 0xffffff
 )
+
+func RandomColors() int {
+	list := []int{RED, ORANGE, YELLOW, GREEN, BLUE, INDIGO, PURPLE}
+	return list[rand.New(rand.NewSource(time.Now().Unix())).Intn(len(list))]
+}
