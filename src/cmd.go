@@ -1,6 +1,7 @@
 package src
 
 import (
+	"log"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
@@ -16,6 +17,11 @@ type CmdResult struct {
 }
 
 func Command(s *discordgo.Session, m *discordgo.MessageCreate) CmdResult {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Println("ERROR", r)
+		}
+	}()
 	cmd := map[string]func(s *discordgo.Session, m *discordgo.MessageCreate) CmdResult{
 		"help": Help,
 	}
