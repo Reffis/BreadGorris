@@ -14,8 +14,9 @@ func Help(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResul
 		Footer:      &discordgo.MessageEmbedFooter{Text: m.Author.Username, IconURL: m.Author.AvatarURL("1024")},
 		Fields: []*discordgo.MessageEmbedField{
 			{Name: "Utility", Value: UTIL_TEXT, Inline: true},
-			{Name: "Fun", Value: FUN_TEXT, Inline: true},
-			{Name: "Owner", Value: OWNER_TEXT, Inline: false},
+			{Name: "Fun", Value: FUN_TEXT, Inline: false},
+			{Name: "Owner", Value: OWNER_TEXT, Inline: true},
+			{Name: "Image", Value: IMAGE_TEXT, Inline: false},
 		},
 	})
 	return CmdResult{"help", nil}
@@ -46,6 +47,7 @@ func Dev(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult
 	})
 	return CmdResult{"dev", nil}
 }
+
 func Test(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult {
 	s.ChannelMessageSend(m.ChannelID, "테su투")
 	return CmdResult{"Test", nil}

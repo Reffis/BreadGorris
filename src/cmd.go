@@ -30,6 +30,7 @@ func Command(s *discordgo.Session, m *discordgo.MessageCreate, args []string) Cm
 		"opensource": OpenSource,
 		"dev":        Dev,
 		"test":       Test,
+		"fox":        Fox,
 	}
 	if args[0] == prefix {
 		return cmd[args[1]](s, m, args)
