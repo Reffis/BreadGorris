@@ -1,3 +1,4 @@
 *.exe
 config.json
 /.idea
+main
