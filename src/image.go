@@ -32,7 +32,7 @@ func decode(link string) (map[string]string, error) {
 func Fox(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult {
 	json, err := decode("https://randomfox.ca/floof/")
 	if err != nil {
-		return CmdResult{"Image", errors.New("Json Decode Error")}
+		return CmdResult{"fox", errors.New("Json Decode Error")}
 	}
 	s.ChannelMessageSendEmbed(m.ChannelID, &discordgo.MessageEmbed{
 		Title: "Fox",
@@ -40,5 +40,5 @@ func Fox(s *discordgo.Session, m *discordgo.MessageCreate, _ []string) CmdResult
 		Color: RandomColors(),
 		Image: &discordgo.MessageEmbedImage{URL: json["image"]},
 	})
-	return CmdResult{"Image", nil}
+	return CmdResult{"fox", nil}
 }
